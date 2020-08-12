@@ -10,9 +10,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{79A15FE6-57DB-4694-8855-1FA698A82689}</ProjectGuid>
     <RootNamespace>PM_CUDA</RootNamespace>
