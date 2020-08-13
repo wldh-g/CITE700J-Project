@@ -1,0 +1,57 @@
+.title-bar {
+  width: 100vw;
+  height: 40px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  -webkit-app-region: drag;
+  z-index: 20;
+
+  .title-bar-label {
+    display: inline-block;
+    margin-left: 10px;
+    line-height: 40px;
+    padding: 0;
+    font-weight: bold;
+    position: relative;
+    font-size: 20px;
+    opacity: .88;
+    font-style: italic;
+    vertical-align: middle;
+    letter-spacing: 2px;
+    transition: letter-spacing .3s ease-out;
+
+    [data-focus="in"] & {
+      letter-spacing: 4px;
+    }
+
+    &::before, &::after {
+      content: 'PixelMazer';
+      opacity: 0.32;
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      transition: left .4s ease-out, opacity .8s ease-in;
+
+      [data-focus="in"] & {
+        opacity: .64;
+      }
+    }
+
+    &::after {
+      color: skyblue;
+
+      [data-theme="light"] & {
+        color: gray;
+      }
+
+      [data-focus="in"] & {
+        left: .36ex;
+      }
+
+      [data-theme="light"][data-focus="in"] & {
+        left: .24ex;
+      }
+    }
+  }
+}

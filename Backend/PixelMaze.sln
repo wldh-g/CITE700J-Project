@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PM_SIMD", "PM_SIMD.vcxproj", "{F5649E67-C80D-4AC7-AC00-F507DB4C8CD6}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PM_C", "PM_C.vcxproj", "{D540E5D3-51FF-46C5-B58A-AFA2CF732211}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PM_CUDA", "PM_CUDA.vcxproj", "{79A15FE6-57DB-4694-8855-1FA698A82689}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +11,10 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F5649E67-C80D-4AC7-AC00-F507DB4C8CD6}.Debug|x64.ActiveCfg = Debug|x64
-		{F5649E67-C80D-4AC7-AC00-F507DB4C8CD6}.Debug|x64.Build.0 = Debug|x64
-		{F5649E67-C80D-4AC7-AC00-F507DB4C8CD6}.Release|x64.ActiveCfg = Release|x64
-		{F5649E67-C80D-4AC7-AC00-F507DB4C8CD6}.Release|x64.Build.0 = Release|x64
 		{D540E5D3-51FF-46C5-B58A-AFA2CF732211}.Debug|x64.ActiveCfg = Debug|x64
 		{D540E5D3-51FF-46C5-B58A-AFA2CF732211}.Debug|x64.Build.0 = Debug|x64
 		{D540E5D3-51FF-46C5-B58A-AFA2CF732211}.Release|x64.ActiveCfg = Release|x64
 		{D540E5D3-51FF-46C5-B58A-AFA2CF732211}.Release|x64.Build.0 = Release|x64
-		{79A15FE6-57DB-4694-8855-1FA698A82689}.Debug|x64.ActiveCfg = Debug|x64
-		{79A15FE6-57DB-4694-8855-1FA698A82689}.Debug|x64.Build.0 = Debug|x64
-		{79A15FE6-57DB-4694-8855-1FA698A82689}.Release|x64.ActiveCfg = Release|x64
-		{79A15FE6-57DB-4694-8855-1FA698A82689}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

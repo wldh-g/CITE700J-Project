@@ -1,0 +1,23 @@
+.client {
+  background-color: var(--back-color);
+  padding-top: 40px;
+  width: 100vw;
+  height: 100vh;
+}
+
+.menu {
+  padding: 20px;
+  color: var(--fore-color);
+
+  .image-button {
+    margin-right: 10px;
+  }
+}
+
+.navigation {
+  padding-top: 20px;
+
+  & > * {
+    margin-right: 20px;
+  }
+}
