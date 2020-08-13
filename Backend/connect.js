@@ -1,24 +1,48 @@
 const ipc = require('node-ipc');
-const pm = require('./x64/Release/PM_C');
+const pm = require('./x64/Release/PM_CUDA');
 
-ipc.config.id = 'c_world';
-ipc.config.retry = 1500;
-ipc.config.silent = true;
-ipc.serve(() => {
-  console.log('Serving...');
-  ipc.server.on('work', (doom) => {
-    console.log('Received a map!');
+const c_ipc = new ipc.IPC;
+c_ipc.config.id = 'c_world';
+c_ipc.config.retry = 1500;
+c_ipc.config.silent = true;
+c_ipc.serve(() => {
+  console.log('   C : Serving...');
+  c_ipc.server.on('work', (doom) => {
+    console.log('   C : Received a map!');
     const doomer = pm.Solver(doom);
     doomer.onIteration(() => {
-      ipc.server.broadcast('proc', doomer.getMapProc());
-      console.log('Iteration reported.');
+      c_ipc.server.broadcast('proc', doomer.getMapProc());
+      console.log('   C : Iteration reported.');
     });
     doomer.onSolved(() => {
-      ipc.server.broadcast('solved', [doomer.getPerformanceReport()[0],
+      c_ipc.server.broadcast('solved', [doomer.getPerformanceReport()[0],
         null/* Solution will be in here */]);
-      console.log('Solution reported.');
+      console.log('   C : Solution reported.');
     });
     doomer.solveWithC();
   });
 });
-ipc.server.start();
+c_ipc.server.start();
+
+const cuda_ipc = new ipc.IPC;
+cuda_ipc.config.id = 'cuda_world';
+cuda_ipc.config.retry = 1500;
+cuda_ipc.config.silent = true;
+cuda_ipc.serve(() => {
+  console.log('CUDA : Serving...');
+  cuda_ipc.server.on('work', (doom) => {
+    console.log('CUDA : Received a map!');
+    const doomer = pm.Solver(doom);
+    doomer.onIteration(() => {
+      cuda_ipc.server.broadcast('proc', doomer.getMapProc());
+      console.log('CUDA : Iteration reported.');
+    });
+    doomer.onSolved(() => {
+      cuda_ipc.server.broadcast('solved', [doomer.getPerformanceReport()[0],
+        null/* Solution will be in here */]);
+      console.log('CUDA : Solution reported.');
+    });
+    doomer.solveWithCUDA();
+  });
+});
+cuda_ipc.server.start();

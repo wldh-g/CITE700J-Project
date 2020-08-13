@@ -9,8 +9,7 @@ module.exports = {
   entry: {
     main: path.resolve(__dirname, 'src', 'components', 'main.tsx'),
     live_c: path.resolve(__dirname, 'src', 'components', 'viewOnC.tsx'),
-    //live_cuda: path.resolve(__dirname, 'src', 'components', 'viewOnCUDA.tsx'),
-    live_simd: path.resolve(__dirname, 'src', 'components', 'viewOnSIMD.tsx'),
+    live_cuda: path.resolve(__dirname, 'src', 'components', 'viewOnCUDA.tsx'),
   },
   mode: 'development',
   module: {

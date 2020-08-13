@@ -1,5 +1,5 @@
 #include <deque>
-#include "SolverAlgorithm.h"
+#include "SolverAlgorithm.cuh"
 #include "Timer.h"
 
 void c_impl::solvIterAsync(PixelMap* map, std::function<void(void)> resolveIter) {

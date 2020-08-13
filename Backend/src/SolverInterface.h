@@ -4,7 +4,7 @@
 #include <node.h>
 #include <node_object_wrap.h>
 #include "MapInstance.h"
-#include "SolverAlgorithm.h"
+#include "SolverAlgorithm.cuh"
 
 class Solver : public node::ObjectWrap {
 public:
@@ -21,7 +21,7 @@ private:
   static void GetMapProc(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void GetLastPerformanceReport(const v8::FunctionCallbackInfo<v8::Value>& args);
   static void SolveWithC(const v8::FunctionCallbackInfo<v8::Value>& args);
-  static void SolveWithSIMD(const v8::FunctionCallbackInfo<v8::Value>& args);
+  static void SolveWithCUDA(const v8::FunctionCallbackInfo<v8::Value>& args);
   
   PixelMap* map_;
   const bool* const map_raw_;

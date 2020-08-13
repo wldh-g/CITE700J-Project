@@ -9,21 +9,22 @@ let sWidth = 1;
 let sHeight = 1;
 let startPoint = [0, 0];
 let setMsgExternal = null;
+let sWall = null;
 const { remote } = window.module.require('electron');
 const ipc = remote.require('node-ipc');
-ipc.config.id = 'simd_viewer';
+ipc.config.id = 'cuda_viewer';
 ipc.config.retry = 1500;
 ipc.config.silent = true;
 ipc.connectTo(
-  'simd_world',
+  'cuda_world',
   () => {
-    ipc.of.simd_world.on('connect', () => {
+    ipc.of.cuda_world.on('connect', () => {
       console.log('Connected to the GUI.');
     });
-    ipc.of.simd_world.on('disconnect', () => {
+    ipc.of.cuda_world.on('disconnect', () => {
       console.log('Disconnected from the GUI.');
     });
-    ipc.of.simd_world.on(
+    ipc.of.cuda_world.on(
       'proc',
       (data, socket) => {
         const [cnt, proc] = data;
@@ -37,8 +38,11 @@ ipc.connectTo(
         const ctx = canvas.getContext('2d');
         for (let y = 0; y < sHeight; y += 1) {
           for (let x = 0; x < sWidth; x += 1) {
-            ctx.fillStyle = cmap[proc[y][x]];
             if (proc[y][x]) {
+              ctx.fillStyle = cmap[proc[y][x]];
+              ctx.fillRect(x * scale, y * scale, scale, scale);
+            } else if (!sWall[y][x]) {
+              ctx.fillStyle = '#ffffff';
               ctx.fillRect(x * scale, y * scale, scale, scale);
             }
           }
@@ -46,12 +50,12 @@ ipc.connectTo(
         console.log(data);
       },
     );
-    ipc.of.simd_world.on(
+    ipc.of.cuda_world.on(
       'solved',
       (data, socket) => {
         const [perfReport, solution] = data;
         if (setMsgExternal != null) {
-          setMsgExternal(`Solved in ${perfReport} ms with SIMD impl.`);
+          setMsgExternal(`Solved in ${perfReport} ms with CUDA impl.`);
         }
       },
     );
@@ -66,7 +70,7 @@ interface Props {
   height: number;
 }
 
-const SIMDSolver : React.SFC<Props> = (props: Props) => {
+const CUDASolver : React.SFC<Props> = (props: Props) => {
   const {
     map, start, end, width, height,
   } = props;
@@ -74,12 +78,13 @@ const SIMDSolver : React.SFC<Props> = (props: Props) => {
   sWidth = width;
   sHeight = height;
   startPoint = start;
+  sWall = map;
 
   const [msg, setMsg] = useState('');
   setMsgExternal = setMsg;
 
   const sendPump = () => {
-    ipc.of.c_world.emit('work', {
+    ipc.of.cuda_world.emit('work', {
       map, start, end, width, height,
     });
   };
@@ -117,4 +122,4 @@ const SIMDSolver : React.SFC<Props> = (props: Props) => {
   );
 };
 
-export default SIMDSolver;
+export default CUDASolver;

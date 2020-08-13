@@ -105,7 +105,7 @@ const Navigation: React.FC = () => {
     });
   };
 
-  const openWithSIMD = () => {
+  const openWithCUDA = () => {
     let windowHeight = doom.height;
     let scaleFactor = 1;
     if (windowHeight > 920) {
@@ -136,7 +136,7 @@ const Navigation: React.FC = () => {
     });
 
     if (window.PMSolver.port) {
-      liveWindow.loadURL(`http://localhost:${window.PMSolver.port}/simd.html`);
+      liveWindow.loadURL(`http://localhost:${window.PMSolver.port}/cuda.html`);
     } else {
       console.error('Port not found');
     }
@@ -159,8 +159,8 @@ const Navigation: React.FC = () => {
           <DefaultButton onClick={openWithC} disabled={!ready}>
             Solve with C
           </DefaultButton>
-          <DefaultButton onClick={openWithSIMD} disabled={!ready}>
-            Solve with SIMD
+          <DefaultButton onClick={openWithCUDA} disabled={!ready}>
+            Solve with CUDA
           </DefaultButton>
         </div>
         <br />

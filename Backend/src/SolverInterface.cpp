@@ -37,7 +37,7 @@ void Solver::Init(Local<Object> exports) {
   NODE_SET_PROTOTYPE_METHOD(tpl, "getMapProc", GetMapProc);
   NODE_SET_PROTOTYPE_METHOD(tpl, "getPerformanceReport", GetLastPerformanceReport);
   NODE_SET_PROTOTYPE_METHOD(tpl, "solveWithC", SolveWithC);
-  NODE_SET_PROTOTYPE_METHOD(tpl, "solveWithSIMD", SolveWithSIMD);
+  NODE_SET_PROTOTYPE_METHOD(tpl, "solveWithCUDA", SolveWithCUDA);
 
   Local<Function> constructor = tpl->GetFunction(context).ToLocalChecked();
   addon_data->SetInternalField(0, constructor);
@@ -159,8 +159,9 @@ void Solver::GetLastPerformanceReport(const FunctionCallbackInfo<Value>& args) {
   Local<Context> context = isolate->GetCurrentContext();
   Solver* solver = ObjectWrap::Unwrap<Solver>(args.Holder());
 
-  Local<Array> perf_report = Array::New(isolate, 1);
+  Local<Array> perf_report = Array::New(isolate, 2);
   perf_report->Set(context, 0, Number::New(isolate, solver->map_->consumed_time));
+  perf_report->Set(context, 1, Number::New(isolate, solver->map_->mem_time));
 
   args.GetReturnValue().Set(perf_report);
 }
@@ -211,7 +212,7 @@ void Solver::SolveWithC(const FunctionCallbackInfo<Value>& args) {
   args.GetReturnValue().SetUndefined();
 }
 
-void Solver::SolveWithSIMD(const FunctionCallbackInfo<Value>& args) {
+void Solver::SolveWithCUDA(const FunctionCallbackInfo<Value>& args) {
   Isolate* isolate = args.GetIsolate();
   Local<Context> context = isolate->GetCurrentContext();
   Solver* solver = ObjectWrap::Unwrap<Solver>(args.Holder());
@@ -235,9 +236,9 @@ void Solver::SolveWithSIMD(const FunctionCallbackInfo<Value>& args) {
 
   uv_queue_work(&loop, &work, [](uv_work_t* work) {
     auto tpl = *((std::tuple<PixelMap*, uv_async_t*>*)(work->data));
-    /*simd_impl::solvIterAsync(std::get<0>(tpl), [&]() -> void {
+    cuda_impl::solvIterAsync(std::get<0>(tpl), [&]() -> void {
       uv_async_send(std::get<1>(tpl));
-    });*/
+    });
   }, [](uv_work_t* work, int status){
     uv_close((uv_handle_t*)std::get<1>(*((std::tuple<PixelMap*, uv_async_t*>*)(work->data))),
              NULL);

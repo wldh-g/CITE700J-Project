@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{85221ee8-5063-4125-aa29-8ae65413a630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{b6030205-0017-4177-b0e7-92e1f89159c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\SolverAlgorithm.cuh">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Timer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SolverInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MapInstance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\MapInstance.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AddonInterface.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SolverC.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SolverInterface.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SolverCUDA.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Timer.cu">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

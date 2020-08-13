@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import { loadTheme } from '@fluentui/react';
 
-import SIMDSolver from './SIMDSolver';
+import CUDASolver from './CUDASolver';
 import TitleBar from './TitleBar';
 
 import * as theme from './theme';
@@ -23,7 +23,7 @@ window.PMSolver.launchRendering = (doomstr) => {
   ReactDOM.render(
     <>
       <TitleBar />
-      <SIMDSolver
+      <CUDASolver
         map={doom.map}
         start={doom.start}
         end={doom.end}

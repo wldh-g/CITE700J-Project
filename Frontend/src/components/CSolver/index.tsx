@@ -9,6 +9,7 @@ let sWidth = 1;
 let sHeight = 1;
 let startPoint = [0, 0];
 let setMsgExternal = null;
+let sWall = null;
 const { remote } = window.module.require('electron');
 const ipc = remote.require('node-ipc');
 ipc.config.id = 'c_viewer';
@@ -37,8 +38,11 @@ ipc.connectTo(
         const ctx = canvas.getContext('2d');
         for (let y = 0; y < sHeight; y += 1) {
           for (let x = 0; x < sWidth; x += 1) {
-            ctx.fillStyle = cmap[proc[y][x]];
             if (proc[y][x]) {
+              ctx.fillStyle = cmap[proc[y][x]];
+              ctx.fillRect(x * scale, y * scale, scale, scale);
+            } else if (!sWall[y][x]) {
+              ctx.fillStyle = '#ffffff';
               ctx.fillRect(x * scale, y * scale, scale, scale);
             }
           }
@@ -74,6 +78,7 @@ const CSolver : React.SFC<Props> = (props: Props) => {
   sWidth = width;
   sHeight = height;
   startPoint = start;
+  sWall = map;
 
   const [msg, setMsg] = useState('');
   setMsgExternal = setMsg;
