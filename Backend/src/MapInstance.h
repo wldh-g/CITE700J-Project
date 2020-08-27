@@ -37,6 +37,8 @@ public:
   pixel_t last_iteration_count;
   double consumed_time;
   double mem_time;
+  double slv_time;
+  double etc_time;
 
   bool validate();
   

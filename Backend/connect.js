@@ -15,8 +15,7 @@ c_ipc.serve(() => {
       console.log('   C : Iteration reported.');
     });
     doomer.onSolved(() => {
-      c_ipc.server.broadcast('solved', [doomer.getPerformanceReport()[0],
-        null/* Solution will be in here */]);
+      c_ipc.server.broadcast('solved', doomer.getPerformanceReport());
       console.log('   C : Solution reported.');
     });
     doomer.solveWithC();
@@ -38,8 +37,7 @@ cuda_ipc.serve(() => {
       console.log('CUDA : Iteration reported.');
     });
     doomer.onSolved(() => {
-      cuda_ipc.server.broadcast('solved', [doomer.getPerformanceReport()[0],
-        null/* Solution will be in here */]);
+      cuda_ipc.server.broadcast('solved', doomer.getPerformanceReport());
       console.log('CUDA : Solution reported.');
     });
     doomer.solveWithCUDA();

@@ -18,6 +18,8 @@ PixelMap::PixelMap(const coord_t size, const coord_t start_point, const coord_t 
   this->last_iteration_count = 0;
   this->consumed_time = 0;
   this->mem_time = 0;
+  this->slv_time = 0;
+  this->etc_time = 0;
 
   this->finished = false;
   this->solvable = true;
@@ -40,6 +42,8 @@ void PixelMap::reset_proc() {
   this->last_iteration_count = 0;
   this->consumed_time = 0;
   this->mem_time = 0;
+  this->slv_time = 0;
+  this->etc_time = 0;
 }
 
 bool PixelMap::is_finished() {

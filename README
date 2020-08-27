@@ -6,4 +6,21 @@ Jio Gim
 
 This repository contains the term project of CITE700J.
 
-Now in development.
+===============================================================================
+
+Performance Report
+
+- Note that I changed my CUDA & CPU algorithm to fix the different solution
+  issue. But it seems that the change caused performance degradation in both
+  C and CUDA.
+
+- Ratio of wall : the performance enhancement degree is increased proportional
+                  to the ratio of non-wall pixels, because it increases the
+                  parallel-ability of calculation.
+
+Maze Size   Ratio of wall   CPU time (ms)   CUDA time (ms)   CUDA memtime (ms)
+----------- --------------- --------------- ---------------- ------------------
+10x10       0.57            0.1664          0.188875         0.145434
+40x40       0.56            2.4427          0.497987         0.433244
+200x200     0.57            38.3411         4.9873           4.43876
+400x400     0.55            126.6164        12.9004          11.3813

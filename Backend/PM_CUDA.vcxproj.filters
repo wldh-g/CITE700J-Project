@@ -7,6 +7,9 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{b6030205-0017-4177-b0e7-92e1f89159c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Wrapper Files">
+      <UniqueIdentifier>{e382de1a-6ed1-471d-a268-ee89539a4bbc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SolverAlgorithm.cuh">
@@ -23,23 +26,30 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\MapInstance.cu">
+    <ClCompile Include="src\AddonInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AddonInterface.cu">
+    <ClCompile Include="src\MapInstance.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SolverC.cu">
+    <ClCompile Include="src\SolverC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SolverInterface.cu">
+    <ClCompile Include="src\SolverInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SolverCUDA.cu">
+    <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Timer.cu">
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="src\SolverCUDA.cu">
       <Filter>Source Files</Filter>
-    </ClCompile>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="connect.js">
+      <Filter>Wrapper Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

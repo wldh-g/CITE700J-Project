@@ -6,9 +6,11 @@ void c_impl::solvIterAsync(PixelMap* map, std::function<void(void)> resolveIter)
   auto [size_x, size_y] = map->size;
   auto [start_x, start_y] = map->start_point;
 
-  CPerfCounter timer;
-  timer.Reset();
-  timer.Start();
+  CPerfCounter timer_sum, timer_core, timer_etc;
+  double time_core = 0;
+  double time_etc = 0;
+  timer_sum.Reset();
+  timer_sum.Start();
 
   /*
   * A Poor Iteration Algorithm Explanation
@@ -25,11 +27,18 @@ void c_impl::solvIterAsync(PixelMap* map, std::function<void(void)> resolveIter)
 
   std::deque<coord_t> queue { map->start_point };
   while (queue.size() > 0) {
+    timer_etc.Reset();
+    timer_etc.Start();
     auto [target_x, target_y] = queue.front();
     queue.pop_front();
     pixel_t next_value = map->proc[target_x + target_y * size_x] + 1;
     map->last_iteration_count = next_value > map->last_iteration_count ?
       next_value : map->last_iteration_count;
+    timer_etc.Stop();
+    time_etc += timer_etc.GetElapsedTime();
+
+    timer_core.Reset();
+    timer_core.Start();
 
     // Up
     if (size_t next_index = target_x + (target_y - 1) * size_x;
@@ -67,11 +76,16 @@ void c_impl::solvIterAsync(PixelMap* map, std::function<void(void)> resolveIter)
       }
     }
 
+    timer_core.Stop();
+    time_core += timer_core.GetElapsedTime();
+
     resolveIter();
   }
 
-  timer.Stop();
-  map->consumed_time = timer.GetElapsedTime() * 1000;
+  timer_sum.Stop();
+  map->consumed_time = timer_sum.GetElapsedTime() * 1000;
+  map->slv_time = time_core * 1000;
+  map->etc_time = time_etc * 1000;
 
   map->mark_as_finished();
   resolveIter();

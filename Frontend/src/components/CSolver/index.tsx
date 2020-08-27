@@ -7,7 +7,6 @@ import './style.scss';
 let scale = 1;
 let sWidth = 1;
 let sHeight = 1;
-let startPoint = [0, 0];
 let setMsgExternal = null;
 let sWall = null;
 const { remote } = window.module.require('electron');
@@ -53,9 +52,12 @@ ipc.connectTo(
     ipc.of.c_world.on(
       'solved',
       (data, socket) => {
-        const [perfReport, solution] = data;
+        const [sum, core, mem, etc] = data;
         if (setMsgExternal != null) {
-          setMsgExternal(`Solved in ${perfReport} ms with C impl.`);
+          setMsgExternal(`C impl. : ${sum.toString().slice(0, 8)} = ${
+            core.toString().slice(0, 8)} ms (core) + ${
+            mem.toString().slice(0, 8)} ms (mem) + ${
+            etc.toString().slice(0, 8)} ms (etc).`);
         }
       },
     );
@@ -77,7 +79,6 @@ const CSolver : React.SFC<Props> = (props: Props) => {
   scale = document.body.offsetWidth / width;
   sWidth = width;
   sHeight = height;
-  startPoint = start;
   sWall = map;
 
   const [msg, setMsg] = useState('');
@@ -116,7 +117,7 @@ const CSolver : React.SFC<Props> = (props: Props) => {
       <div styleName="badboy">
         <PrimaryButton onClick={sendPump}>Solve</PrimaryButton>
         <DefaultButton onClick={reset}>Reset</DefaultButton>
-        <Text variant="xLarge">{msg}</Text>
+        <Text variant="medium">{msg}</Text>
       </div>
     </>
   );

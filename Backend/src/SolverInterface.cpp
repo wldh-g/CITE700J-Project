@@ -159,9 +159,11 @@ void Solver::GetLastPerformanceReport(const FunctionCallbackInfo<Value>& args) {
   Local<Context> context = isolate->GetCurrentContext();
   Solver* solver = ObjectWrap::Unwrap<Solver>(args.Holder());
 
-  Local<Array> perf_report = Array::New(isolate, 2);
+  Local<Array> perf_report = Array::New(isolate, 4);
   perf_report->Set(context, 0, Number::New(isolate, solver->map_->consumed_time));
-  perf_report->Set(context, 1, Number::New(isolate, solver->map_->mem_time));
+  perf_report->Set(context, 1, Number::New(isolate, solver->map_->slv_time));
+  perf_report->Set(context, 2, Number::New(isolate, solver->map_->mem_time));
+  perf_report->Set(context, 3, Number::New(isolate, solver->map_->etc_time));
 
   args.GetReturnValue().Set(perf_report);
 }
@@ -180,9 +182,9 @@ void Solver::SolveWithC(const FunctionCallbackInfo<Value>& args) {
   uv_loop_init(&loop);
 
   uv_async_t async;
-  async.data = new std::tuple { isolate, solver->on_iteration_ };
+  async.data = new std::tuple { isolate, solver->on_iteration_, solver->map_ };
   uv_async_init(&loop, &async, [](uv_async_t* handle) -> void {
-    auto tpl = *((std::tuple<Isolate*, Persistent<Function>*>*)(handle->data));
+    auto tpl = *((std::tuple<Isolate*, Persistent<Function>*, PixelMap*>*)(handle->data));
     auto on_iteration = Local<Function>::New(std::get<0>(tpl), *std::get<1>(tpl));
     auto context = std::get<0>(tpl)->GetCurrentContext();
     on_iteration->CallAsFunction(context, context->Global(), 0, nullptr);

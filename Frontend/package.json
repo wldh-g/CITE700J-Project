@@ -13,9 +13,6 @@
     "start-app": "electron .",
     "start": "concurrently --kill-others \"npm run start-web\" \"npm run start-app\""
   },
-  "engines": {
-    "node": "14.8.0"
-  },
   "dependencies": {
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
